@@ -1,0 +1,23 @@
+{% block content %}
+{% if next %}
+<form action="{% url 'login' %}?next={{next}}" method="post" >
+{%else%}
+<form action="{% url 'login' %}" method="post" >
+{% endif %}
+	{% csrf_token %}
+	<div>
+		<label for="username">Username</label>
+		<input type="text" name="username"/>
+	</div>
+	<div>
+		<label for="password">Password</label>
+		<input type="password" name="password"/>
+	</div>
+	{% if form.errors %}
+		<div class="login-error">
+			<p>Your username and password didn't match.<br> Please try again.</p>
+		</div>    
+	{% endif %}
+	<button type="submit"> Log In</button>
+</form>
+{% endblock %}

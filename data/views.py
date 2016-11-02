@@ -5,14 +5,17 @@ from os import environ
 from sqlalchemy import create_engine, text
 from pandas import read_sql
 import math
+from django.contrib.auth.decorators import login_required
 
 engine = create_engine(environ['DATABASE_URL'], echo=False)
 # Create your views here.
 
+@login_required
 def index(request):
     col_query = read_sql("select * from all_items limit 0;", engine)
     return render(request, 'data/index.html', context={"columns":list(col_query)})
 
+@login_required
 def all_data(request):
     if request.is_ajax():
         where_clause = ""
