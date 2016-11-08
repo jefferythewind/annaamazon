@@ -7,9 +7,9 @@
 	jQuery(function($){
 	
 		$('#grid').jqGrid({
-			caption: "All US Items",
+			caption: "Ordered Items",
 			url: "{% url 'data:all_data' %}",
-			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "all" },
+			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "oi" },
 			colModel: [
 				{% for column in columns %}
 					{ name : "{{column}}" },
@@ -18,8 +18,8 @@
 			dataType: 'json',
 			pager: true,
 			guiStyle: "bootstrap",
-			sortname: "index",
-			sortorder: "asc",
+			sortname: "purchase_date",
+			sortorder: "desc",
 			autowidth: true,
 			viewrecords: true
 		}).jqGrid('filterToolbar');

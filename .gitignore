@@ -1,3 +1,4 @@
 .env
 db.sqlite3
 annaamazon/wsgi.py
+deploy.sh

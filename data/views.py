@@ -7,7 +7,7 @@ from pandas import read_sql
 import math
 from django.contrib.auth.decorators import login_required
 
-engine = create_engine(environ['DATABASE_URL'], echo=False)
+engine = create_engine(environ['DATABASE_URL'], echo=False).raw_connection()
 # Create your views here.
 
 @login_required
@@ -16,12 +16,24 @@ def index(request):
     return render(request, 'data/index.html', context={"columns":list(col_query)})
 
 @login_required
+def orders(request):
+    col_query = read_sql("select * from order_items limit 0;", engine)
+    return render(request, 'data/orders.html', context={"columns":list(col_query)})
+
+
+@login_required
 def all_data(request):
     if request.is_ajax():
         where_clause = ""
+        args = {
+            'all':['all_items','index'],
+            'oi': ['order_items','itemid']
+        }
+        table_name = args[request.GET.get('arg1')][0]
+        pk = args[request.GET.get('arg1')][1]
         for key, value in request.GET.items():
             #print(key, value)
-            if key not in ['sidx','rows','_search','nd','sord','csrfmiddlewaretoken','page']:
+            if key not in ['sidx','rows','_search','nd','sord','csrfmiddlewaretoken','page','arg1']:
                 where_clause += """CAST("%s" AS TEXT) LIKE '%%%s%%' and """ % (key,value)
         where_clause = where_clause.rstrip(" and ")
         
@@ -31,25 +43,22 @@ def all_data(request):
         sord = request.GET.get('sord')
         search = request.GET.get('_search')
         
-        
-         
         if search == "true":
             #print where_clause
-            count_df = read_sql(text("""SELECT count(*) as the_count from all_items where %s;""" % where_clause),engine)
-            df = read_sql(text("""SELECT * from all_items where %s order by "%s" %s limit %s offset %s;""" % (where_clause, sidx, sord, rows, rows*page-rows) ),engine)
+            count_df = read_sql("""SELECT count(*) as the_count from %s where %s;""" % (table_name, where_clause),engine)
+            df = read_sql("""SELECT * from %s where %s order by "%s" %s limit %s offset %s;""" % (table_name, where_clause, sidx, sord, rows, rows*page-rows) ,engine)
         else:
-            count_df = read_sql("""SELECT count(*) as the_count from all_items;""",engine)
-            df = read_sql("""SELECT * from all_items order by "%s" %s limit %s offset %s;""" % (sidx, sord, rows, rows*page-rows),engine)    
+            count_df = read_sql("""SELECT count(*) as the_count from %s;""" % table_name, engine)
+            df = read_sql("""SELECT * from %s order by "%s" %s limit %s offset %s;""" % (table_name, sidx, sord, rows, rows*page-rows),engine)    
 
         columns = list(df)
 
         d = df.to_dict()
 
-        
         rows = []
         
-        for index in d['index']:
-            new_row = {'id':d['index'][index]}
+        for index in d[pk]:
+            new_row = {'id':d[pk][index]}
             cell = []
             for column in columns:
                 cell.append(d[column][index])
