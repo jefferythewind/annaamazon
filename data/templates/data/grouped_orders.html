@@ -7,9 +7,9 @@
 	jQuery(function($){
 	
 		$('#grid').jqGrid({
-			caption: "Ordered Items",
+			caption: "Grouped Orders 1 Year",
 			url: "{% url 'data:all_data' %}",
-			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "oi" },
+			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "go" },
 			colModel: [
 				{% for column in columns %}
 					{ name : "{{column}}" },
@@ -18,7 +18,7 @@
 			dataType: 'json',
 			pager: true,
 			guiStyle: "bootstrap",
-			sortname: "purchase_date",
+			sortname: "dollar_volume",
 			sortorder: "desc",
 			autowidth: true,
 			viewrecords: true,
