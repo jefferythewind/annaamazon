@@ -16,12 +16,23 @@ def index(request):
     return render(request, 'data/index.html', context={"columns":list(col_query)})
 
 @login_required
+def cd_items(request):
+    col_query = read_sql("select * from all_items limit 0;", engine)
+    return render(request, 'data/cd_items.html', context={"columns":list(col_query)})
+
+@login_required
 def orders(request):
     col_query = read_sql("select * from order_items limit 0;", engine)
     return render(request, 'data/orders.html', context={"columns":list(col_query)})
 
 @login_required
-def grouped_orders(request):return render(request, 'data/grouped_orders.html', context={"columns":['asin','title','dollar_volume','num_items','avg_price']})
+def grouped_orders(request):
+    return render(request, 'data/grouped_orders.html', context={"columns":['asin','title','dollar_volume','num_items','avg_price']})
+
+@login_required
+def inactive(request):
+    col_query = read_sql("select * from inactive_items limit 0;", engine)
+    return render(request, 'data/inactive.html', context={"columns":list(col_query)})
 
 @login_required
 def all_data(request):
@@ -39,7 +50,9 @@ def all_data(request):
                     from 
                         order_items 
                     group by 
-                        title, asin) grouped_orders""", 'asin']
+                        title, asin) grouped_orders""", 'asin'],
+            'cd_items': ["""(select * from all_items where asin1 ~ '^\d+$') cd_items""", 'index'],
+            'inactive':['inactive_items','index']
         }
         table_name = args[request.GET.get('arg1')][0]
         pk = args[request.GET.get('arg1')][1]

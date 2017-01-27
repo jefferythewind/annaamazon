@@ -7,9 +7,9 @@
 	jQuery(function($){
 	
 		$('#grid').jqGrid({
-			caption: "Grouped Orders 1 Year",
+			caption: "All US Items",
 			url: "{% url 'data:all_data' %}",
-			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "go" },
+			postData: { "csrfmiddlewaretoken" : "{{ csrf_token }}", "arg1" : "inactive" },
 			colModel: [
 				{% for column in columns %}
 					{ name : "{{column}}" },
@@ -18,11 +18,10 @@
 			dataType: 'json',
 			pager: true,
 			guiStyle: "bootstrap",
-			sortname: "num_items",
-			sortorder: "desc",
+			sortname: "index",
+			sortorder: "asc",
 			autowidth: true,
-			viewrecords: true,
-			rowList: [20,50,100]
+			viewrecords: true
 		}).jqGrid('filterToolbar');
 	
 	});

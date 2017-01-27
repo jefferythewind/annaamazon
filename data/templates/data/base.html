@@ -42,13 +42,15 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <div class="navbar-brand">Mondonect Data Portal</div>
+      <div class="navbar-brand">Mondonect</div>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{% url 'data:index' %}">All Items</a></li>
+		<li><a href="{% url 'data:inactive' %}">Inactive</a></li>
+		<li><a href="{% url 'data:cd_items' %}">CD Items</a></li>
         <li><a href="{% url 'data:orders' %}">Orders</a></li>
 		<li><a href="{% url 'data:grouped_orders' %}">Grouped Orders</a></li>
       </ul>

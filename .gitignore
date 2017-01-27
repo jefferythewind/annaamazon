@@ -2,3 +2,5 @@
 db.sqlite3
 annaamazon/wsgi.py
 deploy.sh
+amazon_mws.py
+reportfile
