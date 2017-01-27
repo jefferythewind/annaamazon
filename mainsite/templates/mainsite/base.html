@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Mondonect</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="{% static 'js/ie/html5shiv.js' %}"></script><![endif]-->
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'css/ie8.css' %}" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="{% static 'css/ie9.css' %}" /><![endif]-->
+	</head>
+	<body class="landing">
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<h1><a href="index.html">Mondonect</a></h1>
+				<a href="#nav">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="{% url 'mainsite:index' %}">Home</a></li>
+					<li><a href="{% url 'mainsite:generic' %}">Generic</a></li>
+					<li><a href="{% url 'mainsite:elements' %}">Elements</a></li>
+				</ul>
+			</nav>
+		{% block content %}
+		
+		{% endblock %}
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-facebook">
+							<span class="label">Facebook</span>
+						</a></li>
+						<li><a href="#" class="icon fa-twitter">
+							<span class="label">Twitter</span>
+						</a></li>
+						<li><a href="#" class="icon fa-instagram">
+							<span class="label">Instagram</span>
+						</a></li>
+						<li><a href="#" class="icon fa-linkedin">
+							<span class="label">LinkedIn</span>
+						</a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Mondonect.</li>
+						<li>Images: <a href="http://unsplash.com">Unsplash</a>.</li>
+						<li>Design: <a href="http://templated.co">TEMPLATED</a>.</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/skel.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<!--[if lte IE 8]><script src="{% static 'js/ie/respond.min.js' %}"></script><![endif]-->
+			<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
+</html>
